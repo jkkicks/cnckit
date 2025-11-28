@@ -93,7 +93,7 @@ class Config:
 
         # Lazy import - only require PyYAML when actually loading a file
         try:
-            import yaml
+            import yaml  # type: ignore[import-untyped]
         except ImportError:
             raise ImportError(
                 "PyYAML is required to load configuration files. "

@@ -274,7 +274,7 @@ class LinuxCNCBackend:
         """
         # Try to import linuxcnc
         try:
-            import linuxcnc  # type: ignore[import-not-found]
+            import linuxcnc
 
             self._linuxcnc = linuxcnc
             self._stat = linuxcnc.stat()
@@ -338,7 +338,7 @@ class LinuxCNCBackend:
     def tool(self) -> int:
         """Get current tool number from LinuxCNC."""
         self._stat.poll()
-        return self._stat.tool_in_spindle
+        return int(self._stat.tool_in_spindle)
 
     @property
     def current_program(self) -> str | None:
@@ -357,13 +357,15 @@ class LinuxCNCBackend:
         if self._stat.file == "":
             return 0.0
 
-        total_lines = self._stat.line_count if hasattr(self._stat, "line_count") else 0
-        current_line = self._stat.current_line
+        total_lines: int = (
+            self._stat.line_count if hasattr(self._stat, "line_count") else 0
+        )
+        current_line: int = self._stat.current_line
 
         if total_lines <= 0:
             return 0.0
 
-        return min(1.0, current_line / total_lines)
+        return float(min(1.0, current_line / total_lines))
 
     def load_program(self, path: str) -> None:
         """

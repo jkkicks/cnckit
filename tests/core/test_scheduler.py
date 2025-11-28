@@ -191,7 +191,9 @@ class TestSchedulerStop:
 class TestSchedulerPause:
     """Tests for Scheduler.pause()."""
 
-    def test_pause_with_no_job_pauses_immediately(self, machine, queue, sample_programs):
+    def test_pause_with_no_job_pauses_immediately(
+        self, machine, queue, sample_programs
+    ):
         """Pausing with no current job pauses immediately."""
         queue.add(sample_programs[0])
         queue.add(sample_programs[1])  # Need 2 jobs to not go to STOPPED
@@ -363,7 +365,9 @@ class TestSchedulerTick:
 class TestSchedulerErrorHandling:
     """Tests for Scheduler error handling."""
 
-    def test_poll_exception_stops_scheduler(self, machine, queue, events, sample_programs):
+    def test_poll_exception_stops_scheduler(
+        self, machine, queue, events, sample_programs
+    ):
         """Exception during poll() stops the scheduler."""
         queue.add(sample_programs[0])
         scheduler = Scheduler(machine, queue, events)
@@ -384,7 +388,9 @@ class TestSchedulerErrorHandling:
         assert len(machine_errors) == 1
         assert "Connection lost" in str(machine_errors[0])
 
-    def test_machine_error_stops_scheduler(self, machine, queue, events, sample_programs):
+    def test_machine_error_stops_scheduler(
+        self, machine, queue, events, sample_programs
+    ):
         """Machine error stops the scheduler."""
         queue.add(sample_programs[0])
         scheduler = Scheduler(machine, queue, events)
@@ -543,7 +549,9 @@ class TestSchedulerFullWorkflow:
 class TestSchedulerRunForever:
     """Tests for Scheduler.run_forever()."""
 
-    def test_run_forever_processes_all_jobs(self, machine, queue, events, sample_programs):
+    def test_run_forever_processes_all_jobs(
+        self, machine, queue, events, sample_programs
+    ):
         """run_forever() processes all jobs then returns."""
         # Use very short execution and poll times
         machine._backend._execution_time = 0.01  # type: ignore
