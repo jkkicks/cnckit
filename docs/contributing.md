@@ -11,11 +11,12 @@ git clone https://github.com/jacobm/cnckit.git
 cd cnckit
 ```
 
-2. Install dependencies with [uv](https://docs.astral.sh/uv/):
+2. Create a virtual environment and install dependencies:
 
 ```bash
-uv sync --extra dev
-source .venv/bin/activate
+python -m venv .venv
+source .venv/bin/activate  # or `.venv\Scripts\activate` on Windows
+pip install -e ".[dev]"
 ```
 
 3. Install pre-commit hooks:
@@ -29,26 +30,33 @@ pre-commit install
 ### Running Tests
 
 ```bash
-uv run pytest
+pytest
 ```
 
 With coverage:
 
 ```bash
-uv run pytest --cov=cnckit --cov-report=html
+pytest --cov=src/cnckit --cov-report=term-missing
+```
+
+For HTML coverage report:
+
+```bash
+pytest --cov=src/cnckit --cov-report=html
+open htmlcov/index.html
 ```
 
 ### Linting
 
 ```bash
-uvx ruff check .
-uvx ruff format .
+ruff check .
+ruff format .
 ```
 
 ### Type Checking
 
 ```bash
-uv run mypy src/cnckit
+mypy src/cnckit
 ```
 
 ### Building Documentation
@@ -56,19 +64,13 @@ uv run mypy src/cnckit
 Preview docs locally:
 
 ```bash
-uv run mkdocs serve
+mkdocs serve
 ```
 
 Build static site:
 
 ```bash
-uv run mkdocs build
-```
-
-### Building the Package
-
-```bash
-uv build
+mkdocs build
 ```
 
 ## Pull Request Process

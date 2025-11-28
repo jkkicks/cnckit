@@ -3,7 +3,7 @@
 ## Requirements
 
 - Python 3.10 or higher
-- LinuxCNC (for actual machine control)
+- LinuxCNC (optional — simulation mode available for development)
 
 ## Basic Installation
 
@@ -59,13 +59,14 @@ pip install cnckit[all]
 
 ## Development Installation
 
-For contributing to cnckit (using [uv](https://docs.astral.sh/uv/)):
+For contributing to cnckit:
 
 ```bash
 git clone https://github.com/jacobm/cnckit.git
 cd cnckit
-uv sync --extra dev
+python -m venv .venv
 source .venv/bin/activate
+pip install -e ".[dev]"
 ```
 
 This installs all development dependencies including:
@@ -79,12 +80,24 @@ This installs all development dependencies including:
 ## Verifying Installation
 
 ```python
-import cnckit
-print(cnckit.__version__)
+from cnckit.core import Machine, JobQueue, Scheduler
+
+# Simulation mode - no LinuxCNC required
+machine = Machine(simulate=True)
+print(f"Machine state: {machine.state}")
 ```
 
 ## LinuxCNC Setup
 
-cnckit requires LinuxCNC to be installed and running for actual machine control. On systems without LinuxCNC, cnckit can be used in simulation mode (coming in Phase 3).
+For production use with real CNC hardware, LinuxCNC must be installed and running:
+
+```python
+from cnckit.core import Machine
+
+# Connects to running LinuxCNC instance
+machine = Machine()  # Raises error if LinuxCNC unavailable
+```
 
 For LinuxCNC installation, see the [official documentation](https://linuxcnc.org/docs/).
+
+**Tip:** Use `Machine(simulate=True)` during development to test your automation logic without hardware.

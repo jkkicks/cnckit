@@ -4,36 +4,62 @@ Get started with cnckit in minutes.
 
 ## Basic Usage
 
-The simplest way to use cnckit is with the `quickstart` function:
+### With LinuxCNC (Production)
 
 ```python
-from cnckit import quickstart
+from cnckit.core import Machine, JobQueue, Scheduler
 
-# Start processing jobs from a directory
-quickstart("/home/cnc/jobs/")
+# Connect to LinuxCNC (requires LinuxCNC to be running)
+machine = Machine()
+
+# Create a job queue
+queue = JobQueue()
+queue.add("part1.ngc")
+queue.add("part2.ngc")
+
+# Create and start scheduler
+scheduler = Scheduler(machine, queue)
+scheduler.run_forever()  # Blocks until queue is empty
 ```
 
-This will:
+### Simulation Mode (Testing/Development)
 
-1. Initialize a connection to LinuxCNC
-2. Create a job queue from `.ngc` files in the directory
-3. Start a scheduler to process jobs
+```python
+from cnckit.core import Machine, JobQueue, Scheduler
+
+# Use simulation mode - no LinuxCNC required
+machine = Machine(simulate=True)
+
+queue = JobQueue()
+queue.add("part1.ngc")
+
+scheduler = Scheduler(machine, queue)
+scheduler.start()
+
+# Manual tick loop for more control
+while scheduler.state.value == "running":
+    scheduler.tick()
+    time.sleep(1.0)
+```
 
 ## Step-by-Step Setup
 
 For more control, use the individual components:
 
 ```python
-from cnckit import Machine, JobQueue, Scheduler
+from cnckit.core import Machine, JobQueue, Scheduler, Event, EventEmitter
 
-# Connect to LinuxCNC
-machine = Machine()
+# Connect to LinuxCNC (or use simulate=True for testing)
+machine = Machine(simulate=True)
 
 # Create a job queue (FIFO by default)
 queue = JobQueue()
 
-# Create a scheduler
-scheduler = Scheduler(machine, queue)
+# Create event emitter for callbacks
+events = EventEmitter()
+
+# Create a scheduler with event support
+scheduler = Scheduler(machine, queue, events)
 
 # Add jobs to the queue
 queue.add("part1.ngc")
@@ -48,7 +74,7 @@ scheduler.start()
 cnckit supports different queue ordering strategies:
 
 ```python
-from cnckit.core.queue import JobQueue, QueueMode
+from cnckit.core import JobQueue, QueueMode
 
 # First in, first out (default)
 fifo_queue = JobQueue(mode=QueueMode.FIFO)
@@ -65,20 +91,27 @@ priority_queue = JobQueue(mode=QueueMode.PRIORITY)
 React to job events:
 
 ```python
-from cnckit import Machine, JobQueue, Scheduler, EventEmitter
-from cnckit.core.events import Event
+from cnckit.core import Machine, JobQueue, Scheduler, Event, EventEmitter
 
-emitter = EventEmitter()
+machine = Machine(simulate=True)
+queue = JobQueue()
+events = EventEmitter()
 
-@emitter.on(Event.JOB_COMPLETED)
+# Register callbacks for events
 def on_complete(job):
     print(f"Finished: {job.name}")
 
-@emitter.on(Event.JOB_FAILED)
 def on_error(job, error):
     print(f"Error in {job.name}: {error}")
 
-scheduler = Scheduler(machine, queue, events=emitter)
+def on_started(job):
+    print(f"Started: {job.name}")
+
+events.on(Event.JOB_COMPLETED, on_complete)
+events.on(Event.JOB_FAILED, on_error)
+events.on(Event.JOB_STARTED, on_started)
+
+scheduler = Scheduler(machine, queue, events)
 ```
 
 ## Scheduler Control
@@ -88,9 +121,37 @@ Control job execution:
 ```python
 scheduler.start()   # Start processing jobs
 scheduler.pause()   # Finish current job, then pause
-scheduler.stop()    # Stop immediately
+scheduler.stop()    # Stop immediately (aborts current job)
 
-print(scheduler.state)  # 'running', 'paused', or 'stopped'
+# Check state
+print(scheduler.state)  # SchedulerState.RUNNING, PAUSED, or STOPPED
+
+# Get current job
+if scheduler.current_job:
+    print(f"Running: {scheduler.current_job.name}")
+```
+
+## Machine State
+
+Monitor machine state:
+
+```python
+from cnckit.core import Machine, MachineState
+
+machine = Machine(simulate=True)
+
+# Check state
+if machine.state == MachineState.IDLE:
+    print("Machine is ready")
+
+# Convenience methods
+machine.is_idle()      # True if idle
+machine.is_running()   # True if running a program
+machine.is_ready()     # True if idle or paused
+
+# Position and tool
+print(f"Position: X={machine.position.x}, Y={machine.position.y}")
+print(f"Tool: {machine.tool}")
 ```
 
 ## Next Steps

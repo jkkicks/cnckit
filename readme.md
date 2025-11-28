@@ -10,36 +10,32 @@ cnckit provides a minimal core with optional integration modules, allowing you t
 
 **Core (dependency-free):**
 
-- Job queue with FIFO/LIFO support and prioritization
+- Job queue with FIFO/LIFO/priority ordering
 - Scheduler with start/stop/pause controls
-- Machine state abstraction over LinuxCNC's Python API
-- Event callbacks for job completion, errors, and idle state
+- Machine state abstraction over LinuxCNC
+- Event callbacks for job lifecycle
+- Simulation mode for development
 
 **Optional Integrations:**
 
 - REST API for remote monitoring
-- MQTT client for messaging and automation
-- Websocket real-time streaming
+- MQTT for messaging and automation
+- WebSocket real-time streaming
 - Robot interfaces (ROS2, TCP)
 
 ## Quick Start
 
 ```python
-from cnckit import Machine, JobQueue, Scheduler
+from cnckit.core import Machine, JobQueue, Scheduler
 
-machine = Machine()
+machine = Machine(simulate=True)  # or Machine() for real LinuxCNC
 queue = JobQueue()
 scheduler = Scheduler(machine, queue)
 
 queue.add("part1.ngc")
-scheduler.start()
-```
+queue.add("part2.ngc", priority=10)
 
-Or use the one-liner:
-
-```python
-from cnckit import quickstart
-quickstart("/home/cnc/jobs/")
+scheduler.run_forever()
 ```
 
 ## Installation
@@ -51,26 +47,29 @@ pip install cnckit
 With optional integrations:
 
 ```bash
-pip install cnckit[api]      # REST API support
+pip install cnckit[api]      # REST API
 pip install cnckit[mqtt]     # MQTT
 pip install cnckit[all]      # Everything
 ```
 
 ## Documentation
 
-- [Architecture](docs/architecture.md) - Design philosophy and module structure
-- [Roadmap](docs/roadmap.md) - Planned features and development phases
+- **[Quick Start](docs/getting-started/quickstart.md)** — Get up and running
+- **[Architecture](docs/architecture.md)** — Design philosophy
+- **[API Reference](docs/api/core/machine.md)** — Full API docs
+- **[Roadmap](docs/roadmap.md)** — Planned features
 
 ## Development
 
 ```bash
 git clone https://github.com/jacobm/cnckit.git
 cd cnckit
-uv venv && uv pip install -e ".[dev]"
-source .venv/bin/activate
-pre-commit install
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
 pytest
 ```
+
+See [Contributing](docs/contributing.md) for guidelines.
 
 ## License
 

@@ -1,36 +1,36 @@
 # Roadmap
 
-This document outlines planned features and future expansion for the project.
+This document outlines planned features and development phases.
 
-## Foundation (Phase 0) - Complete
+## Foundation (Phase 0) ✅
 
 - [x] Project structure and packaging setup
 - [x] Testing framework (pytest)
 - [x] Documentation tooling (mkdocs)
 - [x] CI/CD pipeline for tests and docs
 
-## Core Features (Phase 1)
+## Core Features (Phase 1) ✅
 
-- [ ] FIFO/LIFO job queues
-- [ ] Job metadata (time, tool, priority)
-- [ ] Scheduler with start/stop/pause controls
-- [ ] Machine abstraction hiding LinuxCNC API complexity
-- [ ] Event callbacks for job completion, errors, idle state
+- [x] FIFO/LIFO/priority job queues
+- [x] Job metadata (status, timestamps, priority, tools)
+- [x] Scheduler with start/stop/pause controls
+- [x] Machine abstraction with simulation mode
+- [x] Event system for job lifecycle callbacks
+- [x] Configuration loader with defaults
 
 ## Optional Integrations (Phase 2)
 
 - [ ] REST API for remote monitoring (FastAPI)
 - [ ] MQTT client for messaging and automation
-- [ ] Websocket real-time status streaming
-- [ ] Robot integration (ROS2, TCP commands)
+- [ ] WebSocket real-time status streaming
 - [ ] Simple web dashboard for queue & machine state
 
 ## Future Expansion (Phase 3+)
 
+- [ ] Robot integration (ROS2, TCP commands)
 - [ ] Plugin system for user-contributed modules
-- [ ] Industry tools (MQTT/OPC-UA, PLC handshakes)
+- [ ] Industry protocols (OPC-UA, PLC handshakes)
 - [ ] Multi-machine coordination
-- [ ] Simulation mode for testing without hardware
 
 ## Guiding Principle
 
