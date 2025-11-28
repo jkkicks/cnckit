@@ -2,12 +2,12 @@
 
 This document outlines planned features and future expansion for the project.
 
-## Foundation (Phase 0)
+## Foundation (Phase 0) - Complete
 
-- [ ] Project structure and packaging setup
-- [ ] Testing framework (pytest)
-- [ ] Documentation tooling
-- [ ] CI/CD pipeline for tests and docs
+- [x] Project structure and packaging setup
+- [x] Testing framework (pytest)
+- [x] Documentation tooling (mkdocs)
+- [x] CI/CD pipeline for tests and docs
 
 ## Core Features (Phase 1)
 

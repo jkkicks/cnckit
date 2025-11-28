@@ -1,0 +1,156 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cnckit"
+version = "0.1.0"
+description = "A lightweight, modular Python framework for job queuing, scheduling, and automation around LinuxCNC"
+readme = "readme.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [{ name = "Jacob M" }]
+keywords = ["linuxcnc", "cnc", "automation", "job-queue", "scheduling", "gcode"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Manufacturing",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+
+dependencies = []
+
+[project.optional-dependencies]
+api = ["fastapi>=0.100.0", "uvicorn[standard]>=0.20.0"]
+mqtt = ["paho-mqtt>=2.0.0"]
+websocket = ["websockets>=12.0"]
+robot = []  # ROS2 has its own installation process
+all = ["cnckit[api]", "cnckit[mqtt]", "cnckit[websocket]"]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.4.0",
+    "mypy>=1.10.0",
+    "pre-commit>=3.7.0",
+    "mkdocs>=1.6.0",
+    "mkdocs-material>=9.5.0",
+    "mkdocstrings[python]>=0.25.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/jacobm/cnckit"
+Documentation = "https://jacobm.github.io/cnckit"
+Repository = "https://github.com/jacobm/cnckit"
+Issues = "https://github.com/jacobm/cnckit/issues"
+
+[project.scripts]
+cnckit = "cnckit.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cnckit"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/docs"]
+
+# ============================================================================
+# pytest configuration
+# ============================================================================
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = [
+    "-ra",
+    "-q",
+    "--strict-markers",
+    "--strict-config",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests requiring external services",
+]
+asyncio_mode = "auto"
+
+# ============================================================================
+# coverage configuration
+# ============================================================================
+[tool.coverage.run]
+source = ["src/cnckit"]
+branch = true
+parallel = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]
+show_missing = true
+
+# ============================================================================
+# ruff configuration
+# ============================================================================
+[tool.ruff]
+target-version = "py310"
+line-length = 88
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "PTH",    # flake8-use-pathlib
+    "ERA",    # eradicate (commented code)
+    "PL",     # pylint
+    "RUF",    # ruff-specific
+]
+ignore = [
+    "PLR0913",  # too many arguments
+    "PLR2004",  # magic value comparison
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cnckit"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["ARG001", "PLR2004", "ERA001", "PLC0415"]
+"src/cnckit/integrations/**/*.py" = ["ARG002", "PLC0415", "B904"]
+
+# ============================================================================
+# mypy configuration
+# ============================================================================
+[tool.mypy]
+python_version = "3.10"
+mypy_path = "src"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["linuxcnc.*", "paho.*", "rclpy.*", "fastapi.*", "websockets.*"]
+ignore_missing_imports = true

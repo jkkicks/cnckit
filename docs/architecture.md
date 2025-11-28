@@ -2,6 +2,31 @@
 
 This document describes the architectural vision and design philosophy of the project.
 
+## Project Structure
+
+```
+cnckit/
+├── src/cnckit/
+│   ├── __init__.py          # Package root with quickstart()
+│   ├── cli.py               # CLI entry point
+│   ├── py.typed             # PEP 561 type marker
+│   ├── core/                # Layer 1 - dependency-free
+│   │   ├── machine.py       # LinuxCNC abstraction
+│   │   ├── job.py           # Job metadata dataclass
+│   │   ├── queue.py         # FIFO/LIFO/priority queue
+│   │   ├── scheduler.py     # Job execution coordinator
+│   │   ├── events.py        # Pub/sub event system
+│   │   └── config.py        # YAML/TOML config loader
+│   └── integrations/        # Layer 2 - optional modules
+│       ├── api/             # FastAPI REST endpoints
+│       ├── mqtt/            # MQTT client
+│       ├── websocket/       # WebSocket server
+│       └── robot/           # ROS2/TCP interfaces
+├── tests/                   # Test suite (mirrors src structure)
+├── docs/                    # MkDocs documentation
+└── .github/workflows/       # CI/CD pipelines
+```
+
 ## Design Philosophy
 
 The package is built around a "building-block architecture":

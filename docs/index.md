@@ -56,21 +56,15 @@ pip install cnckit[mqtt]     # MQTT
 pip install cnckit[all]      # Everything
 ```
 
-## Documentation
+## Design Philosophy
 
-- [Architecture](docs/architecture.md) - Design philosophy and module structure
-- [Roadmap](docs/roadmap.md) - Planned features and development phases
+cnckit is built around a "building-block architecture":
 
-## Development
-
-```bash
-git clone https://github.com/jacobm/cnckit.git
-cd cnckit
-uv venv && uv pip install -e ".[dev]"
-source .venv/bin/activate
-pre-commit install
-pytest
-```
+- The **core** stays extremely small, stable, and dependency-free
+- Optional **integrations** are available but never forced
+- Users adopt only what they need
+- The project remains accessible to non-technical LinuxCNC users
+- Advanced users can layer on automation, APIs, and robotics
 
 ## License
 
