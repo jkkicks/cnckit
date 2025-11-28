@@ -71,3 +71,6 @@ venv.bak/
 
 # Project specific
 *.log
+
+# Planning docs (working documents)
+**/planning/
