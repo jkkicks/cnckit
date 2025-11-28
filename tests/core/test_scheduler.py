@@ -1,8 +1,5 @@
 """Tests for the Scheduler class."""
 
-import time
-from pathlib import Path
-
 import pytest
 
 from cnckit.core.events import Event, EventEmitter
@@ -438,7 +435,7 @@ class TestSchedulerErrorHandling:
 
         failed_jobs = []
         started_jobs = []
-        events.on(Event.JOB_FAILED, lambda job, e: failed_jobs.append(job))
+        events.on(Event.JOB_FAILED, lambda job, _: failed_jobs.append(job))
         events.on(Event.JOB_STARTED, lambda job: started_jobs.append(job))
 
         scheduler.start()

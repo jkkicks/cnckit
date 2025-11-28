@@ -1,7 +1,6 @@
 """Tests for the Machine class and related components."""
 
 import time
-from pathlib import Path
 
 import pytest
 

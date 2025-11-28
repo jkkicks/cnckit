@@ -5,8 +5,9 @@ This module provides an event emitter that allows registering
 callbacks for various system events like job completion, errors, etc.
 """
 
-from collections.abc import Callable
+import contextlib
 from collections import defaultdict
+from collections.abc import Callable
 from enum import Enum
 from typing import Any
 
@@ -79,10 +80,8 @@ class EventEmitter:
         """
         key = self._normalize_event(event)
         if key in self._listeners:
-            try:
+            with contextlib.suppress(ValueError):
                 self._listeners[key].remove(callback)
-            except ValueError:
-                pass  # Callback not in list, ignore
 
     def emit(self, event: Event | str, *args: Any, **kwargs: Any) -> None:
         """

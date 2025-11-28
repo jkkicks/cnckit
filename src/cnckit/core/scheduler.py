@@ -9,15 +9,11 @@ from __future__ import annotations
 
 import time
 from enum import Enum
-from typing import TYPE_CHECKING
 
 from cnckit.core.events import Event, EventEmitter
-from cnckit.core.job import Job
+from cnckit.core.job import Job  # noqa: TC001
 from cnckit.core.machine import Machine, MachineState
-from cnckit.core.queue import JobQueue
-
-if TYPE_CHECKING:
-    pass
+from cnckit.core.queue import JobQueue  # noqa: TC001
 
 
 class SchedulerState(Enum):

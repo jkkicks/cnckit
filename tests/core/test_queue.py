@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from cnckit.core.job import Job
 from cnckit.core.queue import JobQueue, QueueMode
 
@@ -204,9 +202,9 @@ class TestJobQueueRemove:
     def test_remove_middle_job(self):
         """Can remove job from middle of queue."""
         queue = JobQueue()
-        job1 = queue.add("first.ngc")
+        queue.add("first.ngc")
         job2 = queue.add("second.ngc")
-        job3 = queue.add("third.ngc")
+        queue.add("third.ngc")
 
         queue.remove(job2)
 

@@ -5,11 +5,11 @@ This module provides a clean interface to LinuxCNC, hiding the complexity
 of the underlying API and providing a consistent state model.
 """
 
+import time
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 from typing import Protocol, runtime_checkable
-import time
 
 
 class MachineState(Enum):
@@ -274,7 +274,7 @@ class LinuxCNCBackend:
         """
         # Try to import linuxcnc
         try:
-            import linuxcnc
+            import linuxcnc  # noqa: PLC0415
 
             self._linuxcnc = linuxcnc
             self._stat = linuxcnc.stat()
@@ -285,14 +285,14 @@ class LinuxCNCBackend:
             raise RuntimeError(
                 "LinuxCNC Python module not available. "
                 "Use Machine(simulate=True) for testing without hardware."
-            )
+            ) from None
         except Exception as e:
-            raise RuntimeError(f"Failed to connect to LinuxCNC: {e}")
+            raise RuntimeError(f"Failed to connect to LinuxCNC: {e}") from e
 
         self._current_program: str | None = None
 
     @property
-    def state(self) -> MachineState:
+    def state(self) -> MachineState:  # noqa: PLR0911
         """Get current machine state from LinuxCNC."""
         self._stat.poll()
 

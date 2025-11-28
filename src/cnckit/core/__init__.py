@@ -18,19 +18,16 @@ from cnckit.core.queue import JobQueue, QueueMode
 from cnckit.core.scheduler import Scheduler, SchedulerState
 
 __all__ = [
-    # Main classes
     "Config",
+    "Event",
     "EventEmitter",
     "Job",
     "JobQueue",
-    "Machine",
-    "Scheduler",
-    # Enums
-    "Event",
     "JobStatus",
+    "Machine",
     "MachineState",
-    "QueueMode",
-    "SchedulerState",
-    # Data classes
     "Position",
+    "QueueMode",
+    "Scheduler",
+    "SchedulerState",
 ]

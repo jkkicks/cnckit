@@ -4,8 +4,6 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-import pytest
-
 from cnckit.core.job import Job, JobStatus
 
 

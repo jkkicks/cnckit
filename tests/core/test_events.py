@@ -31,15 +31,23 @@ class TestEventEmitterBasics:
     def test_on_registers_callback(self):
         """on() registers a callback for an event."""
         emitter = EventEmitter()
-        callback = lambda: None
+
+        def callback() -> None:
+            pass
+
         emitter.on(Event.JOB_COMPLETED, callback)
         assert callback in emitter.listeners(Event.JOB_COMPLETED)
 
     def test_multiple_callbacks(self):
         """Multiple callbacks can be registered for same event."""
         emitter = EventEmitter()
-        callback1 = lambda: None
-        callback2 = lambda: None
+
+        def callback1() -> None:
+            pass
+
+        def callback2() -> None:
+            pass
+
         emitter.on(Event.JOB_COMPLETED, callback1)
         emitter.on(Event.JOB_COMPLETED, callback2)
         listeners = emitter.listeners(Event.JOB_COMPLETED)
@@ -97,7 +105,10 @@ class TestEventEmitterOff:
     def test_off_removes_callback(self):
         """off() removes a registered callback."""
         emitter = EventEmitter()
-        callback = lambda: None
+
+        def callback() -> None:
+            pass
+
         emitter.on(Event.JOB_COMPLETED, callback)
         emitter.off(Event.JOB_COMPLETED, callback)
         assert callback not in emitter.listeners(Event.JOB_COMPLETED)
@@ -105,7 +116,10 @@ class TestEventEmitterOff:
     def test_off_nonexistent_callback_is_noop(self):
         """off() with unregistered callback doesn't raise."""
         emitter = EventEmitter()
-        callback = lambda: None
+
+        def callback() -> None:
+            pass
+
         emitter.off(Event.JOB_COMPLETED, callback)  # Should not raise
 
     def test_off_nonexistent_event_is_noop(self):
@@ -116,8 +130,11 @@ class TestEventEmitterOff:
     def test_removed_callback_not_called(self):
         """Removed callback is not called on emit."""
         emitter = EventEmitter()
-        results = []
-        callback = lambda: results.append("called")
+        results: list[str] = []
+
+        def callback() -> None:
+            results.append("called")
+
         emitter.on(Event.JOB_COMPLETED, callback)
         emitter.off(Event.JOB_COMPLETED, callback)
         emitter.emit(Event.JOB_COMPLETED)
@@ -130,7 +147,10 @@ class TestEventEmitterStringEvents:
     def test_string_event_registration(self):
         """Can register callbacks with string event names."""
         emitter = EventEmitter()
-        callback = lambda: None
+
+        def callback() -> None:
+            pass
+
         emitter.on("custom_event", callback)
         assert callback in emitter.listeners("custom_event")
 
@@ -228,7 +248,10 @@ class TestEventEmitterListeners:
     def test_listeners_returns_copy(self):
         """listeners() returns a copy, not the internal list."""
         emitter = EventEmitter()
-        callback = lambda: None
+
+        def callback() -> None:
+            pass
+
         emitter.on(Event.JOB_COMPLETED, callback)
 
         listeners = emitter.listeners(Event.JOB_COMPLETED)
