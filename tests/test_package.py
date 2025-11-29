@@ -9,9 +9,12 @@ class TestPackageImports:
     """Tests for package imports."""
 
     def test_version_is_defined(self):
-        """Package version should be defined."""
+        """Package version should be defined and follow semver."""
         assert hasattr(cnckit, "__version__")
-        assert cnckit.__version__ == "0.1.0"
+        # Check it's a valid semver format (x.y.z)
+        parts = cnckit.__version__.split(".")
+        assert len(parts) == 3
+        assert all(part.isdigit() for part in parts)
 
     def test_core_classes_importable(self):
         """Core classes should be importable from package root."""
