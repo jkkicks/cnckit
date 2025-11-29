@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   publish-testpypi:
@@ -16,6 +17,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5

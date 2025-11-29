@@ -105,9 +105,72 @@ mkdocs build
 
 ### Commits
 
-- Use clear, descriptive commit messages
-- Reference issues where applicable
+This project uses [Conventional Commits](https://www.conventionalcommits.org/) and [Release Please](https://github.com/googleapis/release-please) for automated versioning and releases.
+
+#### Commit Message Format
+
+```
+<type>: <description>
+
+[optional body]
+
+[optional footer(s)]
+```
+
+#### Commit Types
+
+| Type | Description | Version Bump |
+|------|-------------|--------------|
+| `feat` | New feature | Minor (0.1.0 → 0.2.0) |
+| `fix` | Bug fix | Patch (0.1.0 → 0.1.1) |
+| `docs` | Documentation only | None |
+| `style` | Formatting, no code change | None |
+| `refactor` | Code change, no new feature or fix | None |
+| `test` | Adding or updating tests | None |
+| `chore` | Maintenance tasks | None |
+
+#### Breaking Changes
+
+For breaking changes, add `!` after the type or include `BREAKING CHANGE:` in the footer:
+
+```bash
+feat!: remove deprecated API endpoints
+
+# or
+
+feat: change authentication flow
+
+BREAKING CHANGE: JWT tokens now required for all endpoints
+```
+
+This triggers a major version bump (0.1.0 → 1.0.0).
+
+#### Examples
+
+```bash
+feat: add support for tool change macros
+fix: resolve race condition in job queue
+docs: update API reference for scheduler
+refactor: simplify event emitter logic
+```
+
+#### Additional Guidelines
+
+- Reference issues where applicable (`fix: resolve login bug (#123)`)
 - Keep commits focused and atomic
+
+## Release Process
+
+Releases are automated using [Release Please](https://github.com/googleapis/release-please):
+
+1. **Commits to `main`** are analyzed for conventional commit messages
+2. **Release Please creates a PR** that:
+   - Bumps the version in `pyproject.toml` and `src/cnckit/__init__.py`
+   - Updates the CHANGELOG
+3. **Merging the Release PR** creates a GitHub Release
+4. **The release triggers** automatic publishing to PyPI
+
+Contributors don't need to worry about versioning - just use conventional commits and the automation handles the rest.
 
 ## Architecture Notes
 
