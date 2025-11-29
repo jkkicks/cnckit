@@ -7,7 +7,7 @@ Thank you for considering contributing to cnckit!
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/jacobm/cnckit.git
+git clone https://github.com/jkkicks/cnckit.git
 cd cnckit
 ```
 

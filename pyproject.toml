@@ -48,10 +48,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/jacobm/cnckit"
+Homepage = "https://github.com/jkkicks/cnckit"
 Documentation = "https://jacobm.github.io/cnckit"
-Repository = "https://github.com/jacobm/cnckit"
-Issues = "https://github.com/jacobm/cnckit/issues"
+Repository = "https://github.com/jkkicks/cnckit"
+Issues = "https://github.com/jkkicks/cnckit/issues"
 
 [project.scripts]
 cnckit = "cnckit.cli:main"

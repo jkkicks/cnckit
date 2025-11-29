@@ -62,7 +62,7 @@ pip install cnckit[all]      # Everything
 ## Development
 
 ```bash
-git clone https://github.com/jacobm/cnckit.git
+git clone https://github.com/jkkicks/cnckit.git
 cd cnckit
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"

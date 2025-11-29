@@ -1,8 +1,8 @@
 site_name: cnckit
 site_description: A lightweight, modular Python framework for LinuxCNC automation
 site_url: https://jacobm.github.io/cnckit
-repo_url: https://github.com/jacobm/cnckit
-repo_name: jacobm/cnckit
+repo_url: https://github.com/jkkicks/cnckit
+repo_name: jkkicks/cnckit
 
 theme:
   name: material
@@ -79,4 +79,4 @@ nav:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/jacobm/cnckit
+      link: https://github.com/jkkicks/cnckit
