@@ -13,7 +13,11 @@ from cnckit.core.machine import Machine
 from cnckit.core.queue import JobQueue
 from cnckit.core.scheduler import Scheduler
 
+<<<<<<< HEAD
 __version__ = "0.1.3"
+=======
+__version__ = "0.1.0"
+>>>>>>> 8fb1d8c (chore: reset to v0.1.0 and enable PyPI publishing)
 __all__ = ["EventEmitter", "Job", "JobQueue", "Machine", "Scheduler", "quickstart"]
 
 
