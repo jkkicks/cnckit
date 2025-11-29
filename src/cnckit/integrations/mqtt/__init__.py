@@ -198,7 +198,7 @@ class MQTTClient:
         # Use CallbackAPIVersion.VERSION2 for paho-mqtt 2.0+
         try:
             self._client = mqtt.Client(
-                callback_api_version=mqtt.CallbackAPIVersion.VERSION2,  # type: ignore[attr-defined]
+                callback_api_version=mqtt.CallbackAPIVersion.VERSION2,
                 client_id=client_id or "",
             )
         except (AttributeError, TypeError):
