@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/jkkicks/cnckit/compare/v0.1.1...v0.1.2) (2025-11-29)
+
+
+### Bug Fixes
+
+* version test validates format not specific version ([5a62d66](https://github.com/jkkicks/cnckit/commit/5a62d66f6c5011e66584e7a29d71ec7af431bea0))
+
 ## [0.1.1](https://github.com/jkkicks/cnckit/compare/v0.1.0...v0.1.1) (2025-11-29)
 
 
