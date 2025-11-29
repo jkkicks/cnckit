@@ -4,11 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cnckit"
-<<<<<<< HEAD
-version = "0.1.3"
-=======
 version = "0.1.0"
->>>>>>> 8fb1d8c (chore: reset to v0.1.0 and enable PyPI publishing)
 description = "A lightweight, modular Python framework for job queuing, scheduling, and automation around LinuxCNC"
 readme = "readme.md"
 license = "MIT"
