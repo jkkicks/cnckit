@@ -77,7 +77,7 @@ reviews:
 
   # Pre-merge quality checks
   pre_merge_checks:
-    title_check:
+    title:
       mode: "warning"
       requirements: |
         Follow conventional commits format:
@@ -86,7 +86,7 @@ reviews:
         - Imperative mood: "add feature" not "added feature"
         - Under 72 characters
 
-    description_check:
+    description:
       mode: "warning"
 
     issue_assessment:
