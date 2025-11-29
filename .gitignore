@@ -71,6 +71,7 @@ venv.bak/
 
 # Project specific
 *.log
+.pypirc
 
 # Planning docs (working documents)
 **/planning/

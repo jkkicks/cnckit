@@ -49,7 +49,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/jkkicks/cnckit"
-Documentation = "https://jacobm.github.io/cnckit"
+Documentation = "https://jkkicks.github.io/cnckit"
 Repository = "https://github.com/jkkicks/cnckit"
 Issues = "https://github.com/jkkicks/cnckit/issues"
 
