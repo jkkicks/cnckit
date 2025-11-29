@@ -18,16 +18,16 @@ This document outlines planned features and development phases.
 - [x] Event system for job lifecycle callbacks
 - [x] Configuration loader with defaults
 
-## Optional Integrations (Phase 2)
+## Optional Integrations (Phase 2) ✅
 
-- [ ] REST API for remote monitoring (FastAPI)
-- [ ] MQTT client for messaging and automation
-- [ ] WebSocket real-time status streaming
-- [ ] Simple web dashboard for queue & machine state
+- [x] REST API for remote monitoring (FastAPI)
+- [x] MQTT client for messaging and automation
+- [x] WebSocket real-time status streaming
+- [x] Robot integration (ROS2, TCP commands)
+- [x] Simple web dashboard for queue & machine state
 
 ## Future Expansion (Phase 3+)
 
-- [ ] Robot integration (ROS2, TCP commands)
 - [ ] Plugin system for user-contributed modules
 - [ ] Industry protocols (OPC-UA, PLC handshakes)
 - [ ] Multi-machine coordination
