@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/jkkicks/cnckit/compare/v0.1.2...v0.1.3) (2025-11-29)
+
+
+### Bug Fixes
+
+* combine publish into release-please workflow ([177b214](https://github.com/jkkicks/cnckit/commit/177b2140a7507e2cdd5cc839a24ee48afbbe7092))
+
 ## [0.1.2](https://github.com/jkkicks/cnckit/compare/v0.1.1...v0.1.2) (2025-11-29)
 
 

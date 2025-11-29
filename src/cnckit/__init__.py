@@ -13,7 +13,7 @@ from cnckit.core.machine import Machine
 from cnckit.core.queue import JobQueue
 from cnckit.core.scheduler import Scheduler
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __all__ = ["EventEmitter", "Job", "JobQueue", "Machine", "Scheduler", "quickstart"]
 
 
