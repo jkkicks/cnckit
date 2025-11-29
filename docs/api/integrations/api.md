@@ -76,6 +76,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 | GET | `/health` | Health check - returns service status and timestamp |
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -90,6 +91,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 | GET | `/machine/status` | Get current machine state, position, and program info |
 
 **Response:**
+
 ```json
 {
   "state": "idle",
@@ -126,6 +128,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 | DELETE | `/queue/{job_id}` | Remove a job from the queue |
 
 **GET /queue Response:**
+
 ```json
 {
   "mode": "fifo",
@@ -148,6 +151,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 ```
 
 **POST /queue Request:**
+
 ```json
 {
   "path": "/path/to/part.ngc",
@@ -157,6 +161,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 ```
 
 **POST /queue Response (201 Created):**
+
 ```json
 {
   "message": "Job added to queue",
@@ -193,6 +198,7 @@ Access the dashboard at `http://localhost:8000/dashboard` when the server is run
 | POST | `/scheduler/tick` | Manually trigger a scheduler tick |
 
 **GET /scheduler/status Response:**
+
 ```json
 {
   "state": "running",
