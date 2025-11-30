@@ -92,11 +92,9 @@ reviews:
     issue_assessment:
       mode: "off"
 
-  # Static analysis tools
+  # Static analysis tools (mypy runs via CI, not CodeRabbit)
   tools:
     ruff:
-      enabled: true
-    mypy:
       enabled: true
     markdownlint:
       enabled: true
