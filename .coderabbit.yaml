@@ -1,0 +1,141 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: "en-US"
+early_access: false
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  review_status: true
+  commit_status: true
+  collapse_walkthrough: false
+  changed_files_summary: true
+  sequence_diagrams: true
+  poem: false
+  abort_on_close: true
+
+  # Path-specific review instructions
+  path_instructions:
+    - path: "src/cnckit/core/**/*.py"
+      instructions: |
+        This is the core module - it must remain lean and dependency-free.
+        - No external dependencies allowed (only Python stdlib)
+        - All public APIs must have type hints
+        - Ensure backwards compatibility
+        - Check for thread safety in Machine and Scheduler classes
+
+    - path: "src/cnckit/integrations/**/*.py"
+      instructions: |
+        These are optional integration modules with external dependencies.
+        - Each integration must validate its dependencies on import
+        - Must raise ImportError with install instructions if deps missing
+        - Should integrate with EventEmitter for event binding
+        - Check that optional deps are in pyproject.toml extras
+
+    - path: "tests/**/*.py"
+      instructions: |
+        Test files should follow pytest conventions.
+        - Use fixtures appropriately
+        - Mock external services, don't make real connections
+        - Test both success and error paths
+        - Integration tests should be marked with @pytest.mark.integration
+
+    - path: "docs/**/*.md"
+      instructions: |
+        Documentation uses MkDocs with Material theme.
+        - Code examples should be runnable
+        - API references use mkdocstrings format (:::)
+        - Keep examples simple and focused
+
+  # Files to exclude from review
+  path_filters:
+    - "!**/*.lock"
+    - "!**/poetry.lock"
+    - "!**/.gitignore"
+    - "!**/uv.lock"
+
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT MERGE"
+      - "wip"
+    base_branches:
+      - "main"
+      - "develop"
+
+  # Finishing touches - auto-suggest improvements
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: true
+
+  # Pre-merge quality checks
+  pre_merge_checks:
+    title:
+      mode: "warning"
+      requirements: |
+        Follow conventional commits format:
+        - Start with type: feat, fix, docs, chore, refactor, test, ci
+        - Optional scope in parentheses: feat(core), fix(mqtt)
+        - Imperative mood: "add feature" not "added feature"
+        - Under 72 characters
+
+    description:
+      mode: "warning"
+
+    issue_assessment:
+      mode: "off"
+
+  # Static analysis tools (mypy runs via CI, not CodeRabbit)
+  tools:
+    ruff:
+      enabled: true
+    markdownlint:
+      enabled: true
+    github-checks:
+      enabled: true
+      timeout_ms: 120000
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  opt_out: false
+  learnings:
+    scope: "auto"
+  issues:
+    scope: "local"
+  pull_requests:
+    scope: "local"
+
+code_generation:
+  docstrings:
+    language: "en-US"
+    path_instructions:
+      - path: "src/cnckit/**/*.py"
+        instructions: |
+          Use Google-style docstrings.
+          Include Args, Returns, Raises sections as appropriate.
+          Keep descriptions concise but complete.
+
+  unit_tests:
+    path_instructions:
+      - path: "src/cnckit/core/**/*.py"
+        instructions: |
+          Generate pytest-style tests.
+          Use fixtures from conftest.py when available.
+          Test edge cases and error conditions.
+          Mock time-dependent operations.
+
+      - path: "src/cnckit/integrations/**/*.py"
+        instructions: |
+          Generate pytest-style tests.
+          Mock all external service connections.
+          Test import error when dependencies missing.
+          Test event binding functionality.
